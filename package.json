@@ -1,0 +1,15 @@
+{
+  "name": "ffxblue",
+  "version": "0.0.1",
+  "description": "a bit of fun making an api",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Favor <pedalpete@hotmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
+  }
+}
