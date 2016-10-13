@@ -33,6 +33,17 @@ describe('Article', () => {
 		expect(article.id).to.be.equal(1);
 	});
 
+	it('should prevent an article from being added twice', function() {
+		let article = new Article({
+			title: "only add once",
+			body: "don't add twice",
+			tags: "tag, related"
+		}).create();
+		expect(article.id).to.be.equal(2);
+		let article2 = article.create();
+		expect(article.id).to.be.equal(2);
+	});
+
 	it('should error if no id provided to get', () =>  {
 		let article = articleStore.get();
 		expect(article).to.have.keys('error');
@@ -46,5 +57,16 @@ describe('Article', () => {
 	it('should return the article by id', () =>  {
 		let article = articleStore.get(1);
 		expect(article).to.have.all.keys('body', 'title', 'date', 'id', 'tags');
+	});
+
+	it('should add only the correct tags', () => {
+		let article = new Article({
+			title: 'check tags',
+			body: 'checking that the correct tags are returned',
+			tags: "Tag, tag, taG"
+		}).create();
+		expect(article.tags).to.contain('tag');
+		expect(article.tags).not.to.contain('Tag');
+		expect(article.tags).not.to.contain('taG');
 	});
 });
