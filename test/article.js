@@ -8,11 +8,11 @@ const articleStore = require('../store/articles');
 describe('Article', () => {
 	it('should error if there is no title or body', () =>  {
 		let article = new Article();
-		expect(article).to.have.all.keys('error');
+		expect(article.error).to.have.all.keys('title', 'body');
 	});
 
 	it('should error if there is a title but no body', () =>  {
-		let article = new Article({title: "new article"});
+		let article = new Article({title: "new article"}).create();
 		expect(article).to.have.all.keys('error');
 	});
 

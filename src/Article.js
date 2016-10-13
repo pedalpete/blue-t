@@ -24,7 +24,7 @@ class Article {
 	constructor(article) {
 		article = article || {}; // no default params in Node v4
 		let errors = validateArticle(article);
-		if (Object.keys(errors).length > 0) return {error: errors};
+		if (Object.keys(errors).length > 0) this.error = errors;
 		this.title = article.title;
 		// Got date format from StackOverflow http://stackoverflow.com/questions/3066586/get-string-in-yyyymmdd-format-from-js-date-object
 		this.date = new Date().toISOString().slice(0,new Date().toISOString().indexOf("T"));
@@ -34,6 +34,7 @@ class Article {
 	create () {
 		// if an id is already assigned, you can't "create", return the article --- maybe an error is better?
 		if (this.id) return this;
+		if (this.error) return {error: this.error};
 		let saved = ArticleStore.create(this);
 		if (saved.error) return saved;
 		let tags = TagStore.add(saved.id, this.tags);

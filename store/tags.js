@@ -31,7 +31,7 @@ const TagStore = {
 	},
 	getRelatedTags: (tag, date) => {
 		let articleIds = store[tag.toLowerCase()];
-		if (!articleIds) return [];
+		if (!articleIds) return {articles: [], tags: []};
 		let articles = articleIds.map(articleStore.get);
 	
 		if (date) articles = articles.filter(a => {
