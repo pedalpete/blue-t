@@ -4,7 +4,7 @@
   "description": "a bit of fun making an api",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --watch",
+    "test": "mocha",
     "start": "node index.js"
   },
   "author": "Favor <pedalpete@hotmail.com>",

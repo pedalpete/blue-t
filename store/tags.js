@@ -1,5 +1,11 @@
 'use strict';
 
+/*
+	Creating a basic store to put tags into an object.
+	The idea being that this could easily be replaced with a 
+	database, orm, etc and only update the addTag and two lines in getRelatedTags
+*/
+
 const articleStore = require('./articles');
 const helpers = require('../src/helpers');
 const store = {};
@@ -10,8 +16,7 @@ let validateParams = (id, tags) => {
 	let errors = {}
 	let article = articleStore.get(id);
 	if (article.error) errors.article = article.error;
-	if (!Array.isArray(tags)) errors.tags = `invalid format for tags, should be strings,
-		 converted to array of strings when creating an article`;
+	if (!Array.isArray(tags)) errors.tags = `invalid format for tags, should be an array of tags`;
 	return errors;
 }
 

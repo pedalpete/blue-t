@@ -4,6 +4,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;
 
+// run the server
+require('../index');
 
 const app = 'http://localhost:8080';
 chai.use(chaiHttp);
@@ -12,21 +14,21 @@ describe('articles', () => {
 	before((done) =>  {
 		chai.request(app)
 			.post('/articles')
-			.send({title: 'mock', body: "first article", tags: "news, math, sports"})
+			.send({title: 'mock', body: "first article", tags: ["news", "math", "sports"]})
 			.end( (err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.id).to.exist;
 			});
 		chai.request(app)
 			.post('/articles')
-			.send({title: 'mock', body: "2md article", tags: "sports, running"})
+			.send({title: 'mock', body: "2md article", tags: ["sports", "running"]})
 			.end( (err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.id).to.exist;
 			});
 		chai.request(app)
 			.post('/articles')
-			.send({title: 'mock', body: "2md article", tags: "comedy, fatal"})
+			.send({title: 'mock', body: "2md article", tags: ["comedy", "fatal"]})
 			.end( (err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.id).to.exist;
@@ -97,8 +99,7 @@ describe('tags', done => {
 			.end( (err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.tag).to.be.equal('sports');
-				expect(res.body.count).to.be.at.least(2);
-				expect(res.body.articles.length).to.be.equal(res.body.count);
+				expect(res.body.articles.length).to.be.equal(2);
 				expect(res.body.related_tags.length).to.be.equal(4);
 				done();
 			});
@@ -125,7 +126,6 @@ describe('tags', done => {
 				expect(res).to.have.status(200);
 				expect(res.body.tag).to.be.equal('sports');
 				expect(res.body.count).to.be.at.least(2);
-				expect(res.body.articles.length).to.be.equal(res.body.count);
 				expect(res.body.related_tags.length).to.be.equal(4);
 				done();
 			});

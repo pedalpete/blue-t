@@ -28,7 +28,7 @@ describe('Article', () => {
 		let article = new Article({
 			title: "2nd article",
 			body: "I'm another article",
-			tags: "news, math"
+			tags: ["news", "math"]
 		}).create();
 		expect(article.id).to.be.equal(1);
 	});
@@ -37,7 +37,7 @@ describe('Article', () => {
 		let article = new Article({
 			title: "only add once",
 			body: "don't add twice",
-			tags: "tag, related"
+			tags: ["tag", "related"]
 		}).create();
 		expect(article.id).to.be.equal(2);
 		let article2 = article.create();
@@ -63,7 +63,7 @@ describe('Article', () => {
 		let article = new Article({
 			title: 'check tags',
 			body: 'checking that the correct tags are returned',
-			tags: "Tag, tag, taG"
+			tags: ["Tag", "tag", "taG"]
 		}).create();
 		expect(article.tags).to.contain('tag');
 		expect(article.tags).not.to.contain('Tag');

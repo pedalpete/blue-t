@@ -7,7 +7,7 @@ const tagStore = require('./store/tags');
 const articleStore = require('./store/articles');
 
 let createArticle = (req, res) => {
-	// this is more complicated without express or other 
+	// getting req.body is more complicated without express or other 
 	// came from http://stackoverflow.com/questions/4295782/how-do-you-extract-post-data-in-node-js
 	let data = ''
 	req.on('data', (chunk) => {
@@ -52,7 +52,7 @@ let tags = (req, res, path) => {
 
 	let tagsObj = {
 		tag: path[1],
-		count: relatedTags.articles.length,
+		count: relatedTags.tags.length,
 		articles: relatedTags.articles,
 		related_tags: relatedTags.tags
 	}
@@ -63,7 +63,11 @@ let tags = (req, res, path) => {
 }
 
 let index = (req, res) => {
+	res.writeHead(404, {
+		'Content-Type': 'text/html'
+	});
 
+	res.end('Hi, there\'s nothing here, but check out the README.md');
 }
 
 
@@ -71,7 +75,7 @@ http.createServer((req, res) => {
 	let path = req.url.split('/').filter(p => {
 		return p.length > 0;
 	});
-	
+
 	switch(path[0]) {
 		case 'articles':
 			articles(req, res, path);
@@ -79,7 +83,7 @@ http.createServer((req, res) => {
 		case 'tag':
 			tags(req, res, path);
 			break;
-		case '':
+		case undefined:
 			index(req, res);
 			break;
 		default:
